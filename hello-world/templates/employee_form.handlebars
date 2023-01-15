@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <meta charset='utf-8' />
+    <title>SFI Example</title>
+    <style>
+      body {
+        background-color: aliceblue;
+        text-align: right;
+      }
+    </style>
+  </head>
+  <body>
+    <form id='employee_form' action='/submit' method='post'>
+      <label for='fname'>מספר אישי מגורם האשראי:</label><br />
+      <input type='text' id='fname' name='fname' /><br />
+
+      <label for='lname'>מצב תעסוקתי:</label><br />
+      <input type='radio' id='employee' name='employment_status' value='employee' />
+      <label for='employee'>שכיר</label><br />
+      <input type='radio' id='self_employed' name='employment_status' value='self_employed' />
+      <label for='self_employed'>עצמאי</label><br />
+      <input type='radio' id='not_employed' name='employment_status' value='not_employed' />
+      <label for='not_employed'>לא מועסק</label><br />
+
+      <label for='company_name'>שם מקום העבודה:</label><br />
+      <input type='text' id='company_name' name='company_name' value={{company_name}} /><br />
+
+      <label for='role'>תפקיד:</label><br />
+      <input type='text' id='role' name='role' value={{role}} /><br />
+
+      <label for='lname'>:תאריך תחילת עבודה</label><br />
+      <input type='date' id='start_date' name='start_date' value={{start_date}} /><br />
+
+      <label for='quantity'>שיעור משרה:</label><br />
+      <input type='number' id='quantity' name='quantity' min='0' max='100' /><br />
+
+      <label for='income'>הכנסה מעבודה:</label><br />
+      <input type='text' id='income' name='income' value={{salary}} /><br />
+
+      <label for='lname'>מסמכים תומכים:</label><br />
+      <input type='file' id='avatar' name='avatar' /><br />
+
+      <label for='satisfaction'>שביעות רצון מהתפקיד:</label><br />
+      <input type='number' id='satisfaction' name='satisfaction' min='1' max='7' value={{satisfaction}} /><br />
+
+      <label for='lname'>האם תרצה לספר משהו נוסף:</label><br />
+      <textarea name='comment' form='employee_form'>Enter text here...</textarea><br /><br />
+
+      <input type="hidden" id="itemId" name="itemId" value={{itemId}} />
+      <input type='submit' value='Submit' />
+    </form>
+  </body>
+</html>
