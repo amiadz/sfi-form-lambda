@@ -14,7 +14,7 @@ Resources:
   # GetEmployeeForm:
   #   Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
   #   Properties:
-  #     CodeUri: hello-world/
+  #     CodeUri: rest/
   #     Handler: app.employeeFormHandler
   #     Runtime: nodejs16.x
   #     Architectures:
@@ -29,7 +29,7 @@ Resources:
   # SubmitEmployeeForm:
   #   Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
   #   Properties:
-  #     CodeUri: hello-world/
+  #     CodeUri: rest/
   #     Handler: app.submitEmployeeFormHandler
   #     Runtime: nodejs16.x
   #     Architectures:
@@ -44,7 +44,7 @@ Resources:
   Verify:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      CodeUri: hello-world/
+      CodeUri: rest/
       Handler: verify.verify
       Runtime: nodejs16.x
       Architectures:
