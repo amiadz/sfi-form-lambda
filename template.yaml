@@ -11,56 +11,41 @@ Globals:
     Timeout: 3
 
 Resources:
-  GetWelcomeForm:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-    Properties:
-      CodeUri: hello-world/
-      Handler: app.welcomeHandler
-      Runtime: nodejs16.x
-      Architectures:
-        - x86_64
-      Events:
-        HelloWorld:
-          Type: HttpApi # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-          Properties:
-            Path: /
-            Method: get
+  # GetEmployeeForm:
+  #   Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+  #   Properties:
+  #     CodeUri: hello-world/
+  #     Handler: app.employeeFormHandler
+  #     Runtime: nodejs16.x
+  #     Architectures:
+  #       - x86_64
+  #     Events:
+  #       HelloWorld:
+  #         Type: HttpApi
+  #         Properties:
+  #           Path: /employeeform
+  #           Method: get
 
-  GetEmployeeForm:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-    Properties:
-      CodeUri: hello-world/
-      Handler: app.employeeFormHandler
-      Runtime: nodejs16.x
-      Architectures:
-        - x86_64
-      Events:
-        HelloWorld:
-          Type: HttpApi
-          Properties:
-            Path: /employeeform
-            Method: get
+  # SubmitEmployeeForm:
+  #   Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+  #   Properties:
+  #     CodeUri: hello-world/
+  #     Handler: app.submitEmployeeFormHandler
+  #     Runtime: nodejs16.x
+  #     Architectures:
+  #       - x86_64
+  #     Events:
+  #       HelloWorld:
+  #         Type: HttpApi
+  #         Properties:
+  #           Path: /submit
+  #           Method: post
 
-  SubmitEmployeeForm:
+  Verify:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       CodeUri: hello-world/
-      Handler: app.submitEmployeeFormHandler
-      Runtime: nodejs16.x
-      Architectures:
-        - x86_64
-      Events:
-        HelloWorld:
-          Type: HttpApi
-          Properties:
-            Path: /submit
-            Method: post
-
-  VerifyForm:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-    Properties:
-      CodeUri: hello-world/
-      Handler: app.verifyHandler
+      Handler: verify.verify
       Runtime: nodejs16.x
       Architectures:
         - x86_64
@@ -69,4 +54,4 @@ Resources:
           Type: HttpApi
           Properties:
             Path: /verify
-            Method: get
+            Method: post

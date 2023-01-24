@@ -1,8 +1,4 @@
-const fs = require('fs')
-const Handlebars = require('handlebars')
-const path = require('path')
 const fetch = require('node-fetch')
-const qs = require('qs');
 require('dotenv').config()
 
 const col_id_map = JSON.parse(process.env.COL_ID_MAP)
@@ -11,14 +7,15 @@ const query = `
 query getEmployeeDetails($employee_id: String!) {
   items_by_column_values (board_id: ${process.env.BOARD_ID}, column_id: ${col_id_map.id}, column_value: $employee_id) {
     id
-        column_values {
+        column_values(ids: ${Object.values(col_id_map)}) {
             id
             title
             text
         }
     }
   }
-  `
+`
+
 const mutation = `
 mutation updateEmployeeDetails($itemId: Int!, $colVal: JSON!) {
   change_multiple_column_values (board_id: 3615818990, item_id: $itemId, column_values: $colVal) {
@@ -47,60 +44,6 @@ const forms = {
     'verify': 'verify_form.handlebars',
     'employee': 'employee_form.handlebars',
 }
-
-exports.welcomeHandler = async (event, context) => {
-    try {
-        const welcome_html = getRenderedHTML({ }, forms.welcome)
-
-        return {
-            'statusCode': 200,
-            'headers': {
-                'Content-Type': 'text/html',
-            },
-            'body': welcome_html
-        }
-    } catch (err) {
-        console.log(err);
-        return err;
-    }
-};
-
-exports.verifyHandler = async (event, context) => {
-    try {
-        var phone = event.queryStringParameters.phone
-        const employee_id = event.queryStringParameters.employee_id
-
-        // remove the start 0
-        phone = "+972" + phone.slice(1)
-
-        const verification = await client.verify.services(process.env.TWILIO_VERIFY_SERVICE)
-            .verifications
-            .create({
-                to: phone,
-                channel: 'whatsapp'
-            });
-            
-        if (verification.status !== 'pending') {
-            context.failed();
-        } else {
-            const verifyRendered = getRenderedHTML({
-                'phone': phone,
-                'employee_id': employee_id
-            }, forms.verify)
-            
-            return {
-                'statusCode': 200,
-                'headers': {
-                    'Content-Type': 'text/html',
-                },
-                'body': verifyRendered
-            }
-        }
-    } catch (err) {
-        console.log(err);
-        return err;
-    }
-};
 
 exports.employeeFormHandler = async (event, context) => {
     try {
@@ -137,6 +80,7 @@ exports.employeeFormHandler = async (event, context) => {
             'statusCode': 200,
             'headers': {
                 'Content-Type': 'text/html',
+                'Set-Cookie': `itemId=${mondayDataJson.itemId}`
             },
             'body': renderedHTML
         }
@@ -151,13 +95,14 @@ exports.employeeFormHandler = async (event, context) => {
 
 exports.submitEmployeeFormHandler = async (event, context) => {
     try {
+        const data = JSON.parse(event.body)
         const colValJson = {
-            [col_id_map.salary]: req.body.income
+            [col_id_map.salary]: data.income
         }
 
         const variables = {
             colVal: JSON.stringify(colValJson),
-            itemId: parseInt(req.body.itemId)
+            itemId: event.Cookie.itemId
         }
 
         const mondayData = (await (await fetch('https://api.monday.com/v2', {
@@ -200,12 +145,8 @@ async function getMondayDataJson(variables) {
         })
     })).json()).data;
 
-    const col_val_arr = Object.values(col_id_map);
-
     const mondayNecData = mondayData.items_by_column_values[0].column_values.reduce((map, cur) => {
-        if (col_val_arr.includes(cur.id)) {
-            map[cur.id] = cur.text;
-        }
+        map[cur.id] = cur.text;
         return map;
     }, {})
 
