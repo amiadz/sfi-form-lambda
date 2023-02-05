@@ -40,7 +40,7 @@ Resources:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       CodeUri: rest/
-      Handler: auth.verify
+      Handler: app.verify
       Runtime: nodejs16.x
       Architectures:
         - x86_64
@@ -55,7 +55,7 @@ Resources:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       CodeUri: rest/
-      Handler: auth.login
+      Handler: app.login
       Runtime: nodejs16.x
       Architectures:
         - x86_64
@@ -70,7 +70,7 @@ Resources:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       CodeUri: rest/
-      Handler: auth.sendData
+      Handler: app.sendData
       Runtime: nodejs16.x
       Architectures:
         - x86_64
