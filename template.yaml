@@ -65,3 +65,18 @@ Resources:
           Properties:
             Path: /auth/login
             Method: post
+
+  sendData:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: rest/
+      Handler: auth.sendData
+      Runtime: nodejs16.x
+      Architectures:
+        - x86_64
+      Events:
+        HelloWorld:
+          Type: HttpApi
+          Properties:
+            Path: /employee/submit
+            Method: post
